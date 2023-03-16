@@ -1,6 +1,6 @@
+<!-- from https://github.com/ShoroukAziz/notion_widgets -->
 <!DOCTYPE html>
 <html lang="en">
-<!-- from https://github.com/ShoroukAziz/notion_widgets -->
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
 			border-radius: 5px;
 			box-shadow: 2px 2px 1px 0px #000000;
 		}
-	
+
 		h2{
 			display: inline-block;
 			margin-right: 10px;
@@ -32,7 +32,7 @@
 		h3{
 			text-align: left;
 			display: inline-block;
-				
+
 		}
 		.small{
 			font-size: 15px;
@@ -54,7 +54,7 @@
 			<h2 class="box" id="seconds"></h2>
 
 			<h3>
-					Left in <br>This Week
+				Left in <br>This Week
 			</h3>
 		</div> 
 	</div>
@@ -65,30 +65,30 @@
 			left_hours = document.getElementById("hours");
 			left_minutes = document.getElementById("minutes");
 			left_seconds = document.getElementById("seconds");
-	 
-			}
 
-			function showRemaining() {
-				now = new Date();
+		}
+
+		function showRemaining() {
+			now = new Date();
 			
-				if(now.getDay() == 0 ){
-					d = 6
-				} else{
-					d = now.getDay() - 1
-				}
-
-				days = 6 - d;
-				hours = 23 - now.getHours();
-				minutes = 59 - now.getMinutes();
-				seconds = 59 - now.getSeconds();
-				left_days.innerHTML = days + "<br> <span class=\"small\"> days </span>"
-				left_hours.innerHTML = hours + "<br> <span class=\"small\"> hours</span>";
-				left_minutes.innerHTML = minutes + "<br> <span class=\"small\">mins</span>";
-				left_seconds.innerHTML = seconds + "<br> <span class=\"small\">secs</span>";
+			if(now.getDay() == 0 ){
+				d = 6
+			} else{
+				d = now.getDay() - 1
 			}
 
-	timer = setInterval (showRemaining, 1000) 
-	CountDownTimer() ;
+			days = 6 - d;
+			hours = 23 - now.getHours();
+			minutes = 59 - now.getMinutes();
+			seconds = 59 - now.getSeconds();
+			left_days.innerHTML = days + "<br> <span class=\"small\"> days </span>"
+			left_hours.innerHTML = hours + "<br> <span class=\"small\"> hours</span>";
+			left_minutes.innerHTML = minutes + "<br> <span class=\"small\">mins</span>";
+			left_seconds.innerHTML = seconds + "<br> <span class=\"small\">secs</span>";
+		}
+
+		timer = setInterval (showRemaining, 1000) 
+		CountDownTimer() ;
 	</script>
 </body>
 </html>
