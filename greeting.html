@@ -1,0 +1,172 @@
+<!-- originally from https://github.com/ShoroukAziz/notion_widgets/blob/master/minimal/minimal-greetings.html -->
+<!-- Modification: greeting, color, remove sec, add emoji -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Greetings</title>
+
+	<style>
+
+
+		body{
+			pointer-events: none;
+			font-variant-caps: all-petite-caps;
+		}
+
+		.widget {
+			padding: 5px 5px;
+			color: #424242;
+			display: flex;
+			justify-content:center;
+			align-items:center;
+			flex-direction: column;
+			max-width: 95%;
+			margin: auto;
+			border: 3px solid #424242;
+			border-radius: 5px;
+			box-shadow: 2px 2px 1px 0px #424242;
+			font-family: Verdana,Geneva,sans-serif;
+		}
+
+		.greet{
+			font-size: 3em;
+		}
+
+		.date-time {
+			display: flex;
+    	column-gap: 20px;
+    	margin-bottom: 16px;
+		}
+
+		.date-time > * {
+			font-size: 1.5em;
+			display: inline-block;
+		}
+
+		.time {
+			min-width: 20px;
+		}
+
+		.colon {
+			font-size: 1em;
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+	<div class="container>">
+		<div class="widget">
+			<div class="greet" id="greet"></div>
+			<div class="date-time">
+				<div class="date">
+					<span id="calendar-emoji">🗓️</span>
+					<span id="date"></span>
+				</div>
+				<div class="clock">
+					<span class="time" id="clock-emoji"></span>
+					<span class="time" id="hour"></span>
+					<span class="colon">:</span>
+					<span class="time" id="min"></span>
+					<!-- <div class="colon">:</div>
+					<div class="time" id="sec"></div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function dispalyGreetings(today){
+			hrs = today.getHours();
+
+			if (hrs >= 23 || hrs < 5)
+				greet = 'Hi night owl 🦉'
+			else if (hrs < 12) 
+				greet = 'Good Morning ✨';
+			else if (hrs <= 17)
+				greet = 'Good Afternoon 🌞';
+			else
+				greet = 'Good Evening 🌅';
+
+			document.getElementById('greet').innerHTML = greet;
+		}
+
+		function dispalyDate(today) {  
+			const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+			const monthNames = ["January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November", "December"
+				];
+
+			var dayName = days[today.getDay()];
+			var monthName = monthNames[today.getMonth()];
+			var date = today.getDate();
+			var year = today.getFullYear();
+			document.getElementById('date').innerHTML = dayName + ", " + monthName + " " + date + " " + year;
+		}
+
+
+		function dispalyClock(today) {
+			// call twelveHour if want to display as 12-hour
+			var hour = padZeros(today.getHours());
+			var minutes = padZeros(today.getMinutes());
+			var seconds = padZeros(today.getSeconds());
+
+			// uncomment below twelveHour if want to display as 12-hour
+			// if(today.getHours() >=12){
+			// 	seconds+=" pm"
+			// }
+			// else{
+			// 	seconds+=" am"
+			// }
+
+			document.getElementById('clock-emoji').innerHTML = getClockEmoji(hour, minutes)
+			document.getElementById('hour').innerHTML = hour;
+			document.getElementById('min').innerHTML = minutes;
+			// document.getElementById('sec').innerHTML = seconds;
+		}
+
+		function twelveHour(hour) {
+			if (hour > 12) {
+				return hour -= 12
+			} else if (hour === 0) {
+				return hour = 12;
+			} else {
+				return hour
+			}
+		}
+
+		function padZeros(num) {
+			if (num < 10) {
+				num = '0' + num
+			};
+			return num;
+		}
+
+		function getClockEmoji(hour, minutes) {
+			const oclock = [ '🕛', '🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙']
+			const half = [ '🕧', '🕜', '🕝', '🕞', '🕟', '🕠', '🕡', '🕢', '🕣', '🕤', '🕥', '🕦' ]
+
+			if (minutes < 15) {
+				return oclock[ hour % 12 ]
+			} else if (minutes <= 45) {
+				return half[ hour % 12 ]
+			} else {
+				return oclock[ (hour + 1) % 12 ]
+			}
+		}
+
+		function dispalyWidget() {
+			var today = new Date();
+			dispalyGreetings(today);
+			dispalyDate(today);
+			dispalyClock(today);
+			setTimeout(dispalyWidget, 30000);
+		}
+
+		dispalyWidget()
+
+	</script>
+</body>
+</html>
